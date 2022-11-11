@@ -6,17 +6,8 @@ export default class Massiv extends Component {
     last: "",
     age1: "",
     email1: "",
-    del: [],
-    data: [
-      {
-        name: "",
-        LastName: "",
-        Age: "",
-        Email: "",
-        edit: "edit",
-        delete: "delete",
-      },
-    ],
+    active: false,
+    data: [],
   };
   nameinput = (i) => {
     this.setState({
@@ -42,18 +33,13 @@ export default class Massiv extends Component {
   Addbtn = (m) => {
     let { data, valin, last, age1, email1 } = this.state;
     data.push({
-      name: "",
-      LastName: "",
-      Age: "",
-      Email: "",
-    });
-    this.setState({
       name: valin,
       LastName: last,
-      Age: age1,
+      Age: email1,
       Email: email1,
-      edit: "edit",
-      delete: "delete",
+    });
+    this.setState({
+      data,
     });
   };
   delbtn = (e) => {
@@ -67,59 +53,32 @@ export default class Massiv extends Component {
   render() {
     return (
       <div className="container">
-        <button
-          style={{
-            width: "100px",
-            borderRadius: "10px",
-            height: "20px",
-            marginLeft: "20px",
-            marginTop: "20px",
-          }}
-          onClick={this.Adduser}
-        >
-          add user
-        </button>
-        <button
-          style={{ width: "100px", borderRadius: "10px", height: "20px" }}
-        >
-          close
-        </button>
-        <div
-          className="navbar"
-          style={{
-            display: "flex",
-            width: "50%",
-            justifyContent: "space-between",
-            marginLeft: "20%",
-            marginTop: "5%",
-            // display: "none"
-          }}
-        >
+        <div className="navbar">
           <div className="top">
             <h4>Name</h4>
             <input type="text" onChange={this.nameinput} />
             <h4>Last Name</h4>
             <input type="text" onChange={this.lastinput} />
           </div>
-          <div>
+          <div></div>
+          <div className="bottom">
+            <h4>Age</h4>
+            <input type="text" onChange={this.ageinput} />
+            <h4>Email</h4>
+            <input type="text" onChange={this.emailinput} />
+            <br />
+            <br />
+            <br />
             <input
               type="submit"
               style={{
                 width: "100px",
                 height: "30px",
                 borderRadius: "15px",
-                marginTop: "20px",
-                marginTop: "150px",
                 background: "green",
               }}
               onClick={this.Addbtn}
             />
-          </div>
-          <div className="bottom">
-            <h4>Age</h4>
-            <input type="text" onChange={this.ageinput} />
-            <h4>Email</h4>
-            <input type="text" onChange={this.emailinput} />
           </div>
         </div>
         <table
@@ -137,8 +96,10 @@ export default class Massiv extends Component {
               <th>LastNAme</th>
               <th>Age</th>
               <th>Email</th>
-              <th colSpan={2}></th>
+              <th colSpan={2} width="50px"></th>
             </tr>
+          </thead>
+          <tbody>
             {this.state.data.lenght !== 0
               ? this.state.data.map((item, index) => (
                   <tr key={index}>
@@ -147,7 +108,6 @@ export default class Massiv extends Component {
                     <td>{item.Age}</td>
                     <td>{item.Email}</td>
                     <td>
-                      <button>{this.state.edit}</button>
                     </td>
                     <td>
                       <button
@@ -155,20 +115,12 @@ export default class Massiv extends Component {
                           this.delbtn(index);
                         }}
                       >
-                        {this.state.delete}
+                        Delete
                       </button>
                     </td>
                   </tr>
                 ))
               : ""}
-          </thead>
-          <tbody>
-            <tr>
-              <td>{this.state.name}</td>
-              <td>{this.state.LastName}</td>
-              <td>{this.state.age}</td>
-              <td>{this.state.Email}</td>
-            </tr>
           </tbody>
         </table>
       </div>
